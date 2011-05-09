@@ -14,4 +14,5 @@ Copy twitter-auth.coffee to twitter-auth.coffee, and update it with your twitter
     coffee -c .
     node server.js
 
-Read the Docs at omgitsads.github.com/coffeescript-twitter-streaming
+Read the Docs at
+[omgitsads.github.com/coffeescript-twitter-streaming]["[omgitsads.github.com/coffeescript-twitter-streaming"]
