@@ -2,12 +2,12 @@
 
 This is a toy app, created to help me learn CoffeeScript and node.js
 
-# Getting started
-
 ## Dependencies
 
     npm install socket.io
     npm install twitter-node
+
+## Getting started
 
 Copy twitter-auth.coffee to twitter-auth.coffee, and update it with your twitter credentials
 
