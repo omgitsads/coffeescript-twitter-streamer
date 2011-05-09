@@ -12,14 +12,16 @@ twitterCredentials = require './twitter-auth'
 # serve it to clients
 indexFile = fs.readFileSync 'index.html', 'utf8'
 
-# Setup the HTTP server to serve the inital page
+# Setup the HTTP server to serve the inital page.
 server = http.createServer (request, response) ->
-  # Set the correct headers for the http response
+
+  # Set the correct headers for the http response,
+  # then send the response with the contents of the
+  # index file we read in on application start.
   response.writeHead 200, 'Content-Type': 'text/html'
-  # respond with the indexFile template
   response.end indexFile
 
-# Bind that server to port 8008
+# Bind the HTTP server to port 8008
 server.listen 8008
 
 # Create the stream from Twitter
@@ -33,23 +35,28 @@ socket = io.listen server
 
 # Handle Websocket connection
 socket.on 'connection', (client) ->
+
+  # Define callback.
   # When we receive a tweet, we want to send it to 
-  # the client
+  # the client.
+  # This is defined before hand so we can remove the
+  # listener when the client disconnects.
   callback = (tweet) ->
     client.send tweet: tweet.text
 
   # Listen for tweets to be streamed to us, 
   # then broadcast them to all clients (each
-  # client will have a listener on the stream.
+  # client will have a listener on the stream).
   stream.addListener 'tweet', callback
 
-  # Output the STDOUT if there was an error
+  # Output the STDOUT if there was an error.
   stream.addListener 'error', (error) ->
     sys.puts "Error: #{error}"
   
-  # Handle the websocket disconnection
+  # Handle the websocket disconnection.
+  # We will remove the listener from the
+  # tweet stream when the client disconnects.
   client.on 'disconnect', (client) -> 
-    # Remove the clients listener on disconnection
     stream.removeListener 'tweet', callback
 
 # Start Streaming from Twitter
