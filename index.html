@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Twitter Streamer</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(document).ready(function(){
+        var socket = new io.Socket();
+        socket.connect("http://localhost");
+
+        socket.on('message', function(msg){ 
+          $("h1").text(msg.tweet);
+        });
+      }); 
+    </script>
+    <style>
+      html, body {
+        width:100%;
+        height:100%;
+      }
+
+      html {
+        display: table;
+      }
+
+      body {
+        text-align: center;
+        background-color: white;
+        padding: 0 30px;
+        display:table-cell;
+        vertical-align: middle;
+      }
+
+      h1 {
+        display:table-cell;
+        max-width: 50em;
+        font-size: 72px;
+        font-family: 'Helvetica';
+        color: #333333;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Waiting for text...</h1>
+  </body>
+</html>
